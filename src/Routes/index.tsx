@@ -6,6 +6,7 @@ import About from "@/pages/About";
 import Analytics from "@/pages/Admin/Analytics";
 import DriverAnalytics from "@/pages/Driver/Analytics";
 import Login from "@/pages/Login";
+import MyProfile from "@/pages/MyProfile";
 import Register from "@/pages/Register";
 import RiderAnalytics from "@/pages/Rider/Analytics";
 import { createBrowserRouter, Navigate } from "react-router";
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
             {
                 path:"rides", 
                 Component: ManageRides
+            },
+            {
+                path:"profile", 
+                Component: MyProfile
             }
         ]
     },

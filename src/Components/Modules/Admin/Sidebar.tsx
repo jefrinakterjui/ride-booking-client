@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { BarChart2, Users, Settings, Car, UserCircle, ArrowLeft } from "lucide-react";
+import { BarChart2, Users, Car, UserCircle, ArrowLeft } from "lucide-react";
 import {
   authApi,
   useLogoutMutation,
@@ -28,11 +28,11 @@ const sidebarLinks = [
     icon: <UserCircle size={20} />,
     label: "My Profile",
   },
-  {
-    to: "/admin/settings",
-    icon: <Settings size={20} />,
-    label: "Settings",
-  },
+  // {
+  //   to: "/admin/settings",
+  //   icon: <Settings size={20} />,
+  //   label: "Settings",
+  // },
 ];
 
 const Sidebar = () => {

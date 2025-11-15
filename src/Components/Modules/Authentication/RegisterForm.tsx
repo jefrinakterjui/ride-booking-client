@@ -1,26 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom"; 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useRegisterMutation } from "@/redux/freatures/auth/auth.api";
 import React from "react";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/Components/ui/select";
 import shild from "@/assets/images/shield.png";
 import profit from "@/assets/images/profit.png";
 import check from "@/assets/images/check.png";
+import { cn } from "@/lib/utils";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/Components/ui/form";
+import { Input } from "@/Components/ui/input";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/Components/ui/select";
+import Password from "@/Components/ui/password";
 
 const registerSchema = z
   .object({
@@ -28,10 +22,19 @@ const registerSchema = z
       .string()
       .min(3, { message: "Name must be at least 3 characters" })
       .max(50),
-    email: z.email(),
+    email: z.string().email(),
     password: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters" }),
+      .min(8, { message: "Password must be at least 8 characters" })
+      .regex(/^(?=.*[A-Z])/, {
+        message: "Password must contain at least 1 uppercase letter.",
+      })
+      .regex(/^(?=.*[!@#$%^&*])/, {
+        message: "Password must contain at least 1 special character.",
+      })
+      .regex(/^(?=.*\d)/, {
+        message: "Password must contain at least 1 number.",
+      }),
     confirmPassword: z
       .string()
       .min(8, { message: "Confirm Password must be at least 8 characters" }),
@@ -105,17 +108,32 @@ export function RegisterForm({
       form.reset();
       navigate("/login");
     } catch (error: any) {
-      toast.error(
-        error?.data?.message || "Registration failed. Please try again.",
-        { id: toastId }
-      );
-      console.log(error);
+      console.error(error); 
+      let errorMessage = "Registration failed. Please try again."; 
+
+      if (
+        error?.data?.errorSource &&
+        Array.isArray(error.data.errorSource) &&
+        error.data.errorSource.length > 0
+      ) {
+        errorMessage = error.data.errorSource[0].message;
+      } else if (error?.data?.message) {
+        errorMessage = error.data.message;
+      }
+
+      toast.error(errorMessage, { id: toastId });
     }
   };
 
   return (
     <div className="flex md:flex-row flex-col items-center justify-center  gap-20 mx-auto">
-      <div className={cn("flex flex-col gap-3 relative overflow-hidden p-6 border rounded-2xl", className)} {...props}>
+      <div
+        className={cn(
+          "flex flex-col gap-3 relative overflow-hidden p-6 border rounded-2xl",
+          className
+        )}
+        {...props}
+      >
         <div className="flex flex-col items-center gap-2 text-center">
           <h1 className="text-2xl font-bold">Register your account</h1>
           <p className="text-sm text-muted-foreground">
@@ -125,7 +143,10 @@ export function RegisterForm({
         <div className=" w-[250px] h-[250px] rounded-full bg-primary/50 absolute -z-10 -bottom-[20%] -left-[20%] blur-2xl "></div>
         <div className="grid gap-6">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-xs">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-6 max-w-xs"
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -169,8 +190,6 @@ export function RegisterForm({
                   )}
                 />
               </div>
-
-              {/* 5. Conditionally render vehicle info fields */}
               {selectedRole === "DRIVER" && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField
@@ -229,7 +248,7 @@ export function RegisterForm({
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" {...field} />
+                      <Password {...field} /> 
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -242,7 +261,7 @@ export function RegisterForm({
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
-                      <Input type="password" {...field} />
+                      <Password {...field} /> 
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -262,9 +281,7 @@ export function RegisterForm({
           </Link>
         </div>
       </div>
-      <div className=" h-[350px] hidden md:flex  border-r-primary border ">
-
-      </div>
+      <div className=" h-[350px] hidden md:flex  border-r-primary border "></div>
       <div className="flex flex-col justify-center gap-8 p-6 max-w-sm">
         <div className="flex items-start gap-4">
           <div className="text-red-500 text-2xl">

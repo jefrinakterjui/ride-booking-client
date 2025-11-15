@@ -1,9 +1,12 @@
+import RiderAnalytics from "@/Components/Modules/Rider/RiderAnalytics"
 
 
-const RiderAnalytics = () => {
+const RiderAnalyticsPage = () => {
   return (
-    <div>Analytics</div>
+    <div>
+      <RiderAnalytics/>
+    </div>
   )
 }
 
-export default RiderAnalytics
+export default RiderAnalyticsPage

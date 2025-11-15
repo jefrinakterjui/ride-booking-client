@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { BarChart2, Users, Car, UserCircle, ArrowLeft } from "lucide-react";
+import { BarChart2, UserCircle, ArrowLeft, History } from "lucide-react";
 import {
   authApi,
   useLogoutMutation,
@@ -8,31 +8,21 @@ import {
 import { useDispatch } from "react-redux";
 
 const sidebarLinks = [
-  {
-    to: "/admin/analytics",
-    icon: <BarChart2 size={20} />,
-    label: "Analytics",
-  },
-  {
-    to: "/admin/users",
-    icon: <Users size={20} />,
-    label: "Manage Users",
-  },
-  {
-    to: "/admin/rides",
-    icon: <Car size={20} />,
-    label: "Manage Rides",
-  },
-  {
-    to: "/admin/profile",
-    icon: <UserCircle size={20} />,
-    label: "My Profile",
-  },
-  // {
-  //   to: "/admin/settings",
-  //   icon: <Settings size={20} />,
-  //   label: "Settings",
-  // },
+    {
+        to: "/rider/analytics",
+        icon: <BarChart2 size={20} />,
+        label: "Dashboard",
+    },
+    {
+        to: "/rider/ride-history",
+        icon: <History size={20} />,
+        label: "Ride History",
+    },
+    {
+        to: "/rider/profile",
+        icon: <UserCircle size={20} />,
+        label: "My Profile",
+    },
 ];
 
 const Sidebar = () => {

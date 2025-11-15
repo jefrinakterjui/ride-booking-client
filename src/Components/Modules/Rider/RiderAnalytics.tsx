@@ -4,11 +4,11 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { DollarSign, MapPin, History } from "lucide-react";
 import { toast } from "sonner";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/ui/card";
 import { useCreateRideMutation, useGetMyRideHistoryQuery } from "@/redux/ride.api";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Skeleton } from "@/Components/ui/skeleton";
 import { Input } from "@/Components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/ui/table";
 
 const StatCard = ({
   icon,

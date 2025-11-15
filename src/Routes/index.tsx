@@ -5,12 +5,13 @@ import DriverAnalytics from "@/pages/Driver/Analytics";
 import Login from "@/pages/Login";
 import MyProfile from "@/pages/MyProfile";
 import Register from "@/pages/Register";
-import RiderAnalytics from "@/pages/Rider/Analytics";
 import { createBrowserRouter, Navigate } from "react-router";
 import DashboardLayout from "@/Components/Layouts/DashboardLayout";
 import ManageUsers from "@/Components/Modules/Admin/ManageUsers";
 import ManageRides from "@/Components/Modules/Admin/ManageRides";
 import ProtectedRoute from "@/Routes/ProtectedRoute";
+import RiderAnalyticsPage from "@/pages/Rider/Analytics";
+import RideHistoryPage from "@/pages/Rider/History";
 
 export const router = createBrowserRouter([
     {
@@ -85,7 +86,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "analytics",
-                Component: RiderAnalytics
+                Component: RiderAnalyticsPage
+            },
+            {
+                path: "ride-history",
+                Component: RideHistoryPage
             }
         ]
     }

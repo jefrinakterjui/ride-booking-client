@@ -31,6 +31,14 @@ interface IHistoryResponse {
   };
 }
 
+interface IHistoryParams {
+  page?: number;
+  limit?: number;
+  status?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
 export const rideApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createRide: builder.mutation({
@@ -42,10 +50,11 @@ export const rideApi = baseApi.injectEndpoints({
       invalidatesTags: ["Rides"], 
     }),
 
-    getMyRideHistory: builder.query<IHistoryResponse, void>({
-      query: () => ({
+    getMyRideHistory: builder.query<IHistoryResponse, IHistoryParams | void>({
+      query: (params) => ({
         url: "/rides/my-history",
         method: "GET",
+        params: params || {}, 
       }),
       providesTags: ["Rides"],
     }),

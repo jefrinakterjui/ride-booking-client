@@ -1,21 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import Password from "@/components/ui/password";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/Components/ui/form";
+import { Input } from "@/Components/ui/input";
+import Password from "@/Components/ui/password";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/freatures/auth/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom"; 
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -23,6 +15,20 @@ const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8, { message: "Password is too short" }),
 });
+
+interface ILoginResponse {
+  success: boolean;
+  data: {
+    user: {
+      _id: string;
+      email: string;
+      role: "ADMIN" | "DRIVER" | "RIDER";
+    };
+    accessToken: string;
+    refreshToken: string;
+  };
+  message: string;
+}
 
 export function LoginForm({
   className,
@@ -43,17 +49,36 @@ export function LoginForm({
     const toastId = toast.loading("Logging in...");
 
     try {
-      const res = await login(data).unwrap();
+      const res = (await login(data).unwrap()) as ILoginResponse;
 
-      if (res.success) {
+      const user = res?.data?.user;
+
+      if (res.success && user) {
         toast.success("Logged in successfully", { id: toastId });
-        navigate("/");
+        switch (user.role) {
+          case "ADMIN":
+            navigate("/admin/analytics");
+            break;
+          case "DRIVER":
+            navigate("/driver/analytics"); 
+            break;
+          case "RIDER":
+            navigate("/rider/analytics");
+            break;
+          default:
+            navigate("/");
+        }
       }
     } catch (err: any) {
       console.error(err);
 
-      if (err.data.message === "Password does not match") {
-        toast.error("Invalid credentials");
+      const errorMessage =
+        err?.data?.message || "Login failed. Please try again.";
+      
+      if (errorMessage === "Password does not match") {
+        toast.error("Invalid credentials", { id: toastId });
+      } else {
+        toast.error(errorMessage, { id: toastId });
       }
     }
   };

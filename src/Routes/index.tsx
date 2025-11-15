@@ -1,7 +1,4 @@
 import App from "@/App";
-import DashboardLayout from "@/components/Layouts/DashboardLayout";
-import ManageRides from "@/components/Modules/Admin/ManageRides";
-import ManageUsers from "@/components/Modules/Admin/ManageUsers";
 import About from "@/pages/About";
 import Analytics from "@/pages/Admin/Analytics";
 import DriverAnalytics from "@/pages/Driver/Analytics";
@@ -10,68 +7,84 @@ import MyProfile from "@/pages/MyProfile";
 import Register from "@/pages/Register";
 import RiderAnalytics from "@/pages/Rider/Analytics";
 import { createBrowserRouter, Navigate } from "react-router";
+import DashboardLayout from "@/Components/Layouts/DashboardLayout";
+import ManageUsers from "@/Components/Modules/Admin/ManageUsers";
+import ManageRides from "@/Components/Modules/Admin/ManageRides";
+import ProtectedRoute from "@/Routes/ProtectedRoute";
 
 export const router = createBrowserRouter([
     {
-        path:"/",
-        Component:App,
-        children:[
+        path: "/",
+        Component: App,
+        children: [
             {
-                path:"/about",
+                path: "/about",
                 Component: About
             },
             {
-                path:"/login",
+                path: "/login",
                 Component: Login
             },
             {
-                path:"/register",
+                path: "/register",
                 Component: Register
             }
         ]
     },
     {
-        path:"/admin",
-        Component: DashboardLayout,
-        children:[
+        path: "/admin",
+        element: (
+            <ProtectedRoute allowedRoles={["ADMIN"]}>
+                <DashboardLayout />
+            </ProtectedRoute>
+        ),
+        children: [
             {
-                path:"/admin",
-                element: <Navigate to={"/admin/analytics"} replace={true}/>
+                path: "/admin",
+                element: <Navigate to={"/admin/analytics"} replace={true} />
             },
             {
-                path:"analytics",
+                path: "analytics",
                 Component: Analytics
             },
             {
-                path:"users",
+                path: "users",
                 Component: ManageUsers
             },
             {
-                path:"rides", 
+                path: "rides",
                 Component: ManageRides
             },
             {
-                path:"profile", 
+                path: "profile",
                 Component: MyProfile
             }
         ]
     },
     {
-        path:"/driver",
-        Component: DashboardLayout,
-        children:[
+        path: "/driver",
+        element: (
+            <ProtectedRoute allowedRoles={["DRIVER"]}>
+                <DashboardLayout />
+            </ProtectedRoute>
+        ),
+        children: [
             {
-                path:"analytics",
+                path: "analytics",
                 Component: DriverAnalytics
             }
         ]
     },
     {
-        path:"/rider",
-        Component: DashboardLayout,
-        children:[
+        path: "/rider",
+        element: (
+            <ProtectedRoute allowedRoles={["RIDER"]}>
+                <DashboardLayout />
+            </ProtectedRoute>
+        ),
+        children: [
             {
-                path:"analytics",
+                path: "analytics",
                 Component: RiderAnalytics
             }
         ]

@@ -1,9 +1,12 @@
+import DriverAnalytics from "@/Components/Modules/Driver/DriverAnalytics"
 
 
-const DriverAnalytics = () => {
+const DriverAnalyticsPage = () => {
   return (
-    <div>Analytics</div>
+    <div>
+      <DriverAnalytics/>
+    </div>
   )
 }
 
-export default DriverAnalytics
+export default DriverAnalyticsPage

@@ -12,6 +12,8 @@ import ManageRides from "@/Components/Modules/Admin/ManageRides";
 import ProtectedRoute from "@/Routes/ProtectedRoute";
 import RiderAnalyticsPage from "@/pages/Rider/Analytics";
 import RideHistoryPage from "@/pages/Rider/History";
+import AvailableRides from "@/Components/Modules/Driver/AvailableRides";
+import DriverRideHistory from "@/Components/Modules/Driver/DriverRideHistory";
 
 export const router = createBrowserRouter([
     {
@@ -73,6 +75,18 @@ export const router = createBrowserRouter([
             {
                 path: "analytics",
                 Component: DriverAnalytics
+            },
+            {
+                path: "available-rides",
+                Component: AvailableRides
+            },
+            {
+                path: "ride-history",
+                Component: DriverRideHistory
+            },
+            {
+                path: "profile",
+                Component: MyProfile
             }
         ]
     },

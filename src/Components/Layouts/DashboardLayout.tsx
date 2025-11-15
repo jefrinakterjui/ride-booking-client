@@ -1,16 +1,17 @@
-import { Outlet } from "react-router";
+import { Outlet } from "react-router"; 
 import Navbar from "../Modules/Admin/Navbar";
-import { useUserInfoQuery } from "@/redux/freatures/auth/auth.api"; 
-import RiderSidebar from "../Modules/Rider/RiderSidebar"; 
+import { useUserInfoQuery } from "@/redux/freatures/auth/auth.api";
+import RiderSidebar from "../Modules/Rider/RiderSidebar";
 import { Skeleton } from "../ui/skeleton";
 import AdminSidebar from "../Modules/Admin/AdminSidebar";
+import DriverSidebar from "../Modules/Driver/DriverSidebar";
 
 const DashboardLayout = () => {
   const { data, isLoading } = useUserInfoQuery(undefined);
   const userRole = data?.data?.role;
 
   const renderSidebar = () => {
-    if (isLoading) {
+    if (isLoading || !userRole) { 
       return (
         <div className="flex flex-col h-full justify-between p-6 border-r space-y-4">
           <div className="space-y-3">
@@ -21,18 +22,17 @@ const DashboardLayout = () => {
           </div>
           <Skeleton className="h-6 w-1/2" />
         </div>
-      )
+      );
     }
-
     switch (userRole) {
       case "ADMIN":
-        return <AdminSidebar />;
+        return <AdminSidebar />; 
       case "RIDER":
         return <RiderSidebar />;
       case "DRIVER":
-        // return <DriverSidebar />;
+        return <DriverSidebar />;
       default:
-        return <div>Error: Unknown Role</div>; 
+        return <div>Error: Role mismatch.</div>;
     }
   };
 

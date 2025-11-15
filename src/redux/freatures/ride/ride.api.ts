@@ -39,6 +39,18 @@ interface IHistoryParams {
   endDate?: string;
 }
 
+interface IAvailableRidesResponse {
+  success: boolean;
+  message: string;
+  data: IRide[];
+}
+
+interface IAvailableRidesResponse {
+  success: boolean;
+  message: string;
+  data: IRide[];
+}
+
 export const rideApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createRide: builder.mutation({
@@ -58,10 +70,27 @@ export const rideApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Rides"],
     }),
+    getAvailableRides: builder.query<IAvailableRidesResponse, void>({
+      query: () => ({
+        url: "/rides/available",
+        method: "GET",
+      }),
+      providesTags: ["Rides"],
+      keepUnusedDataFor: 5, 
+    }),
+    acceptRide: builder.mutation({
+      query: (rideId: string) => ({
+        url: `/rides/${rideId}/accept`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Rides"], 
+    }),
   }),
 });
 
 export const { 
   useCreateRideMutation, 
-  useGetMyRideHistoryQuery 
+  useGetMyRideHistoryQuery,
+  useGetAvailableRidesQuery, 
+  useAcceptRideMutation,
 } = rideApi;

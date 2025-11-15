@@ -1,10 +1,10 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/Components/ui/badge";
 import { DollarSign, MapPin, History } from "lucide-react";
 import { toast } from "sonner";
-import { useCreateRideMutation, useGetMyRideHistoryQuery } from "@/redux/ride.api";
+import { useCreateRideMutation, useGetMyRideHistoryQuery } from "@/redux/freatures/ride/ride.api";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/ui/card";
 import { Skeleton } from "@/Components/ui/skeleton";
@@ -36,7 +36,7 @@ const RiderAnalytics = () => {
   const stats = {
     totalRides: historyData?.meta?.total || 0,
     totalSpent: historyData?.data?.reduce((acc: number, ride: any) =>
-        ride?.status === "completed" ? acc + (Number(ride?.fare) || 0) : acc, 0) || 0,
+      ride?.status === "completed" ? acc + (Number(ride?.fare) || 0) : acc, 0) || 0,
   };
 
   const recentRides = historyData?.data?.slice(0, 3) || [];
@@ -44,7 +44,7 @@ const RiderAnalytics = () => {
   const handleRideRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const ridePayload = {
-      pickupLocation: { lat: 23.7461, lng: 90.3742 }, 
+      pickupLocation: { lat: 23.7461, lng: 90.3742 },
       destinationLocation: { lat: 23.7925, lng: 90.4078 },
     };
 
@@ -138,7 +138,7 @@ const RiderAnalytics = () => {
                   type="submit"
                   size="lg"
                   className="w-full md:w-auto h-12 text-base"
-                  disabled={isRequestingRide} 
+                  disabled={isRequestingRide}
                 >
                   {isRequestingRide ? "Requesting..." : "Request Ride Now"}
                 </Button>
@@ -182,7 +182,7 @@ const RiderAnalytics = () => {
                         </Badge>
                       </TableCell>
                       <TableCell>৳{ride.fare || "N/A"}</TableCell>
-                       <TableCell>
+                      <TableCell>
                         {new Date(ride.createdAt).toLocaleDateString()}
                       </TableCell>
                     </TableRow>

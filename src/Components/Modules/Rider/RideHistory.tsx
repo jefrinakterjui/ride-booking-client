@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/Components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,7 +8,7 @@ import {
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
 import { ListFilter, Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "lucide-react";
-import { useGetMyRideHistoryQuery } from '@/redux/ride.api';
+import { useGetMyRideHistoryQuery } from '@/redux/freatures/ride/ride.api';
 import { Input } from '@/Components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Skeleton } from '@/Components/ui/skeleton';
@@ -71,7 +71,7 @@ const RideHistory = () => {
                 value={dateFilter}
                 onChange={(e) => {
                   setDateFilter(e.target.value);
-                  setPage(1); 
+                  setPage(1);
                 }}
               />
             </div>
@@ -89,7 +89,7 @@ const RideHistory = () => {
                     checked={statusFilter === status}
                     onCheckedChange={() => {
                       setStatusFilter(status);
-                      setPage(1); 
+                      setPage(1);
                     }}
                   >
                     {status.charAt(0).toUpperCase() + status.slice(1)}

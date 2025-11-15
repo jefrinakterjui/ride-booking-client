@@ -91,6 +91,10 @@ export const router = createBrowserRouter([
             {
                 path: "ride-history",
                 Component: RideHistoryPage
+            },
+            {
+                path: "profile",
+                Component: MyProfile
             }
         ]
     }

@@ -17,15 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useRegisterMutation } from "@/redux/freatures/auth/auth.api";
 import React from "react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/Components/ui/select";
 import shild from "@/assets/images/shield.png";
 import profit from "@/assets/images/profit.png";
 import check from "@/assets/images/check.png";
